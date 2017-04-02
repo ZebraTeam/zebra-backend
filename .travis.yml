@@ -8,11 +8,11 @@ env:
 services:
   - postgresql
 
+addons:
+  postgresql: "9.6"
+
 before_script:
   - psql -c 'create database zebra_test;' -U postgres
 
-addons:
-  postgresql: "9.4"
-
-after_success:
+script:
   - ./gradlew cobertura coveralls
