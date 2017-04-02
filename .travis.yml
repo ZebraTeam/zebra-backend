@@ -1,5 +1,6 @@
 language: java
 dist: trusty
+sudo: required
 jdk:
   - oraclejdk8
 
@@ -8,6 +9,7 @@ env:
 
 services:
   - postgresql
+  - rabbitmq
 
 addons:
   postgresql: "9.6"

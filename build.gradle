@@ -7,6 +7,10 @@ buildscript {
         dbUnitVersion = '2.5.3'
         springTestDbUnitVersion = '1.3.0'
         coverallsVersion = '2.8.1'
+        junitVintageVersion  = '4.12.0-M3'
+        junitPlatformVersion = '1.0.0-M3'
+        junitJupiterVersion  = '5.0.0-M3'
+        mockitoVersion = '2.7.21'
     }
     repositories {
         mavenCentral()
@@ -19,6 +23,7 @@ buildscript {
         classpath("org.jetbrains.kotlin:kotlin-allopen:${kotlinVersion}")
         classpath("org.jetbrains.kotlin:kotlin-noarg:${kotlinVersion}")
         classpath("org.kt3k.gradle.plugin:coveralls-gradle-plugin:${coverallsVersion}")
+        classpath("org.junit.platform:junit-platform-gradle-plugin:${junitPlatformVersion}")
     }
 }
 
@@ -33,8 +38,10 @@ apply plugin: 'kotlin-jpa'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'com.github.kt3k.coveralls'
+apply plugin: 'org.junit.platform.gradle.plugin'
 
 version = '0.0.1-SNAPSHOT'
+
 sourceCompatibility = 1.8
 compileKotlin {
     kotlinOptions.jvmTarget = "1.8"
@@ -43,21 +50,14 @@ compileTestKotlin {
     kotlinOptions.jvmTarget = "1.8"
 }
 
-sourceSets {
-    main.java.srcDirs += [file("$buildDir/generated/source/kapt/main")]
-}
-
 repositories {
     mavenCentral()
     maven { url "https://repo.spring.io/snapshot" }
     maven { url "https://repo.spring.io/milestone" }
 }
 
-test {
-    testLogging {
-        events "failed"
-        exceptionFormat "short"
-    }
+sourceSets {
+    main.java.srcDirs += [file("$buildDir/generated/source/kapt/main")]
 }
 
 cobertura.coverageFormats = ['html', 'xml']
@@ -94,12 +94,18 @@ dependencies {
     //Tools
     compile('org.springframework.boot:spring-boot-starter-actuator')
     runtime('org.springframework.boot:spring-boot-devtools')
-//    compileOnly('org.springframework.boot:spring-boot-configuration-processor')
+    compileOnly('org.springframework.boot:spring-boot-configuration-processor')
 
     compile 'javax.inject:javax.inject:1'
 
     //Test
     testCompile('org.springframework.boot:spring-boot-starter-test')
+
+    testCompile("org.junit.jupiter:junit-jupiter-api:${junitJupiterVersion}")
+    testRuntime("org.junit.jupiter:junit-jupiter-engine:${junitJupiterVersion}")
+    testRuntime("org.junit.vintage:junit-vintage-engine:${junitVintageVersion}")
+
+    compile("org.mockito:mockito-core:${mockitoVersion}")
 
     testCompile("org.dbunit:dbunit:${dbUnitVersion}")
     testCompile("com.github.springtestdbunit:spring-test-dbunit:${springTestDbUnitVersion}")
