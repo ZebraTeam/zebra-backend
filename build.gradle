@@ -98,7 +98,7 @@ dependencies {
     //Tools
     compile('org.springframework.boot:spring-boot-starter-actuator')
     runtime('org.springframework.boot:spring-boot-devtools')
-    compileOnly('org.springframework.boot:spring-boot-configuration-processor')
+//    compileOnly('org.springframework.boot:spring-boot-configuration-processor')
 
     compile 'javax.inject:javax.inject:1'
 
