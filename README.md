@@ -59,7 +59,7 @@ More details about used image available on Docker library website.
 Example usage: *docker-compose up* run in root project directory
 
 
-[travis-badge]: https://travis-ci.org/zebraTeam/zebra-backend.svg?branch=master
-[travis-badge-url]: https://travis-ci.org/zebraTeam/zebra-backend
+[travis-badge]: https://travis-ci.org/ZebraTeam/zebra-backend.svg?branch=master
+[travis-badge-url]: https://travis-ci.org/ZebraTeam/zebra-backend
 [coveralls-badge]: https://coveralls.io/repos/github/ZebraTeam/zebra-backend/badge.svg?branch=master
 [coveralls-badge-url]: https://coveralls.io/github/ZebraTeam/zebra-backend?branch=master
