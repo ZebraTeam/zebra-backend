@@ -1,0 +1,103 @@
+buildscript {
+    ext {
+        kotlinVersion = '1.1.1'
+        springBootVersion = '2.0.0.BUILD-SNAPSHOT'
+        reactorKotlinVersion = '1.0.0.M1'
+        swaggerVersion = '2.6.1'
+        dbUnitVersion = '2.5.3'
+        springTestDbUnitVersion = '1.3.0'
+        coverallsVersion = '0.3.0'
+    }
+    repositories {
+        mavenCentral()
+        maven { url "https://repo.spring.io/snapshot" }
+        maven { url "https://repo.spring.io/milestone" }
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}")
+        classpath("org.jetbrains.kotlin:kotlin-allopen:${kotlinVersion}")
+        classpath("org.jetbrains.kotlin:kotlin-noarg:${kotlinVersion}")
+        classpath("org.kt3k.gradle.plugin:coveralls-gradle-plugin:${coverallsVersion}")
+    }
+}
+
+plugins {
+    id "org.flywaydb.flyway" version "4.1.2"
+}
+
+apply plugin: 'kotlin'
+apply plugin: 'kotlin-spring'
+apply plugin: 'kotlin-jpa'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'jacoco'
+apply plugin: 'coveralls'
+
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+compileKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
+compileTestKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
+
+sourceSets {
+    main.java.srcDirs += [file("$buildDir/generated/source/kapt/main")]
+}
+
+repositories {
+    mavenCentral()
+    maven { url "https://repo.spring.io/snapshot" }
+    maven { url "https://repo.spring.io/milestone" }
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled = true
+        html.enabled = true
+    }
+}
+
+dependencies {
+    //Kotlin
+    compile("org.jetbrains.kotlin:kotlin-stdlib-jre8:${kotlinVersion}")
+    compile("org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}")
+
+    //Spring base
+    compile('org.springframework.boot:spring-boot-starter-webflux')
+    compile('org.springframework.boot:spring-boot-starter-security')
+    compile('org.springframework.boot:spring-boot-starter-validation')
+
+    //Queue
+    compile('org.springframework.boot:spring-boot-starter-amqp')
+
+    // Reactor
+    compile('io.projectreactor:reactor-core')
+    compile("io.projectreactor:reactor-kotlin-extensions:${reactorKotlinVersion}")
+
+    //Data layer
+    compile('org.springframework.boot:spring-boot-starter-data-jpa')
+    runtime('org.postgresql:postgresql')
+    compile('org.flywaydb:flyway-core')
+    compile('com.querydsl:querydsl-jpa')
+    kapt(group: 'com.querydsl', name: 'querydsl-apt', classifier: 'jpa')
+
+    //Swagger
+//    compile("io.springfox:springfox-swagger2:${swaggerVersion}")
+//    compile("io.springfox:springfox-swagger-ui:${swaggerVersion}")
+
+    //Tools
+    compile('org.springframework.boot:spring-boot-starter-actuator')
+    runtime('org.springframework.boot:spring-boot-devtools')
+    compileOnly('org.springframework.boot:spring-boot-configuration-processor')
+
+    compile 'javax.inject:javax.inject:1'
+
+    //Test
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+
+    testCompile("org.dbunit:dbunit:${dbUnitVersion}")
+    testCompile("com.github.springtestdbunit:spring-test-dbunit:${springTestDbUnitVersion}")
+}
