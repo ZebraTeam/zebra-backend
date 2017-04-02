@@ -60,6 +60,10 @@ sourceSets {
     main.java.srcDirs += [file("$buildDir/generated/source/kapt/main")]
 }
 
+junitPlatform{
+    platformVersion '1.0.0-M3'
+}
+
 cobertura.coverageFormats = ['html', 'xml']
 cobertura.coverageSourceDirs = sourceSets.main.kotlin.srcDirs
 
