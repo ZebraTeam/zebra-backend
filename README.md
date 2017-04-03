@@ -6,16 +6,16 @@
 ## Local configuration
 All required configuration is stored in *application-dev-sample.yml* file. Copy it do *application-dev.yml* and add proper configuration information.
 
-To make this file be loaded during startup you need to activate app profile *dev*. Easiest way in local setup is to set environment variable *SPRING_PROFILES_ACTIVE*.
+To make this file be loaded during startup you need to activate app profile *dev*. Easiest way in local setup is to set environment variable *SPRING_PROFILES_ACTIVE*. More information available at [Spring Boot Reference](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-profiles.html).
  
 Right now only required configuration is PostgreSQL connection data.
 
 ## Run
-You can run application using *./gradlew bootRun* command or directly from your IDE.
+You can run application using `./gradlew bootRun` command or directly from your IDE.
 
 ## Test
 
-For writing and running test use Junit 5.   
+For writing and running test use JUnit 5.   
 
 ### Integration Tests
 Running integration tests requires configuration of external service e.g. database.
@@ -31,7 +31,7 @@ When running first class annotated with *@IntegrationTest* DB will be cleaned an
 
 You can also apply initial database data by adding @DatabaseSetup with proper xml file for specific test or test classes.
 
-Test can be run using *./gradlew test*.
+Test can be run using `./gradlew test`.
 
 ## DB migrations
 Flyway is used to manage database migrations.
