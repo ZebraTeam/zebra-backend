@@ -1,0 +1,10 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://<IP_ADDRESS>:<PORT>/DB_NAME
+    username: postgres
+    password:
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    show-sql: true
+flyway:
+  locations: classpath:/db/migration,classpath:/db/dev/
