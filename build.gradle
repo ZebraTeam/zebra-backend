@@ -1,16 +1,15 @@
 buildscript {
     ext {
-        kotlinVersion = '1.1.1'
-        springBootVersion = '2.0.0.BUILD-SNAPSHOT'
-        reactorKotlinVersion = '1.0.0.M1'
-        swaggerVersion = '2.6.1'
-        dbUnitVersion = '2.5.3'
+        kotlinVersion = '1.1.4-3'
+        springBootVersion = '2.0.0.M3'
+        reactorKotlinVersion = '1.0.0.M2'
+        swaggerVersion = '2.7.0'
+        dbUnitVersion = '2.5.4'
         springTestDbUnitVersion = '1.3.0'
         coverallsVersion = '2.8.1'
-        junitVintageVersion  = '4.12.0-M3'
-        junitPlatformVersion = '1.0.0-M3'
-        junitJupiterVersion  = '5.0.0-M3'
-        mockitoVersion = '2.7.21'
+        junitPlatformVersion = '1.0.0'
+        junitJupiterVersion  = '5.0.0'
+        mockitoVersion = '2.10.0'
     }
     repositories {
         mavenCentral()
@@ -28,8 +27,8 @@ buildscript {
 }
 
 plugins {
-    id 'net.saliman.cobertura' version '2.3.1'
-    id "org.flywaydb.flyway" version "4.1.2"
+    id 'net.saliman.cobertura' version '2.5.0'
+    id "org.flywaydb.flyway" version "4.2.0"
 }
 
 apply plugin: 'kotlin'
@@ -37,6 +36,7 @@ apply plugin: 'kotlin-spring'
 apply plugin: 'kotlin-jpa'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
 apply plugin: 'com.github.kt3k.coveralls'
 apply plugin: 'org.junit.platform.gradle.plugin'
 
@@ -61,7 +61,7 @@ sourceSets {
 }
 
 junitPlatform{
-    platformVersion '1.0.0-M3'
+    platformVersion '1.0.0'
 }
 
 cobertura.coverageFormats = ['html', 'xml']
@@ -86,14 +86,14 @@ dependencies {
 
     //Data layer
     compile('org.springframework.boot:spring-boot-starter-data-jpa')
-    runtime('org.postgresql:postgresql')
+    compile('org.postgresql:postgresql')
     compile('org.flywaydb:flyway-core')
     compile('com.querydsl:querydsl-jpa')
     kapt(group: 'com.querydsl', name: 'querydsl-apt', classifier: 'jpa')
 
     //Swagger
-//    compile("io.springfox:springfox-swagger2:${swaggerVersion}")
-//    compile("io.springfox:springfox-swagger-ui:${swaggerVersion}")
+    compile("io.springfox:springfox-swagger2:${swaggerVersion}")
+    compile("io.springfox:springfox-swagger-ui:${swaggerVersion}")
 
     //Tools
     compile('org.springframework.boot:spring-boot-starter-actuator')
@@ -107,7 +107,6 @@ dependencies {
 
     testCompile("org.junit.jupiter:junit-jupiter-api:${junitJupiterVersion}")
     testRuntime("org.junit.jupiter:junit-jupiter-engine:${junitJupiterVersion}")
-    testRuntime("org.junit.vintage:junit-vintage-engine:${junitVintageVersion}")
 
     compile("org.mockito:mockito-core:${mockitoVersion}")
 
