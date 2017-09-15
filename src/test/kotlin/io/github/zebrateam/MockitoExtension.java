@@ -13,6 +13,14 @@ import java.lang.reflect.Parameter;
 
 import static org.mockito.Mockito.mock;
 
+/**
+ * {@code MockitoExtension} showcases the {@link TestInstancePostProcessor}
+ * and {@link ParameterResolver} extension APIs of JUnit 5 by providing
+ * dependency injection support at the field level and at the method parameter
+ * level via Mockito 2.x's {@link Mock @Mock} annotation.
+ *
+ * @since 5.0
+ */
 public class MockitoExtension implements TestInstancePostProcessor, ParameterResolver {
 
     @Override
@@ -21,12 +29,12 @@ public class MockitoExtension implements TestInstancePostProcessor, ParameterRes
     }
 
     @Override
-    public boolean supports(ParameterContext parameterContext, ExtensionContext extensionContext) {
+    public boolean supportsParameter(ParameterContext parameterContext, ExtensionContext extensionContext) {
         return parameterContext.getParameter().isAnnotationPresent(Mock.class);
     }
 
     @Override
-    public Object resolve(ParameterContext parameterContext, ExtensionContext extensionContext) {
+    public Object resolveParameter(ParameterContext parameterContext, ExtensionContext extensionContext) {
         return getMock(parameterContext.getParameter(), extensionContext);
     }
 
